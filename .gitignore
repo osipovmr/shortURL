@@ -24,3 +24,8 @@ gradle-app.setting
 /.idea/.gitignore
 /grandle/gradle/wrapper/gradle-wrapper.jar
 /.idea/shortURL.iml
+/grandle/build/tmp/compileJava/previous-compilation-data.bin
+/.idea/encodings.xml
+/grandle/build/classes/java/main/ConnectToPostgres.class
+/grandle/build/classes/java/main/Constants.class
+/grandle/build/classes/java/main/Main.class
