@@ -1,11 +1,19 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.sql.SQLException;
+import java.util.Date;
+
+
+import static spark.Spark.post;
+
 
 public class Main {
-    private static final Logger log = LogManager.getLogger(Main.class);
-    public static void main(String[] args) {
-        ConnectToPostgres.getConnection();
-        log.info("HELLO");
+
+    public static void main(String[] args) throws SQLException {
+        CreateTable.CreateTable();
+        post("/add", (req, res) -> {
+            TableOperations.add(req.body(), RandomString.getShortUrlRandom());
+            return null;
+        });
+        post("/get", (req, res) -> TableOperations.getShortUrl(req.body()));
 
     }
 }

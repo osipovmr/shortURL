@@ -26,6 +26,12 @@ gradle-app.setting
 /.idea/shortURL.iml
 /grandle/build/tmp/compileJava/previous-compilation-data.bin
 /.idea/encodings.xml
-/grandle/build/classes/java/main/ConnectToPostgres.class
+/grandle/build/classes/java/main/ConnectToPostgresDB.class
 /grandle/build/classes/java/main/Constants.class
 /grandle/build/classes/java/main/Main.class
+/logs/app.log
+/grandle/build/classes/java/main/CreateTable.class
+/grandle/build/resources/main/log4j2.properties
+/grandle/build/classes/java/main/RandomString.class
+/grandle/build/classes/java/main/TableOperations.class
+/.idea/uiDesigner.xml

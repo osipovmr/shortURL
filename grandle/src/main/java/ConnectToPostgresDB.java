@@ -1,14 +1,13 @@
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ConnectToPostgres implements Constants {
-    private static Logger log = LoggerFactory.getLogger(Main.class);
+public class ConnectToPostgresDB implements Constants {
+    private static final Logger log = LogManager.getLogger(ConnectToPostgresDB.class);
     private static HikariConfig config = new HikariConfig();
     private static HikariDataSource dataSource;
 
@@ -27,10 +26,10 @@ public class ConnectToPostgres implements Constants {
     public static Connection getConnection() {
         try {
             Connection connection = dataSource.getConnection();
-            log.info("Успешное подключение к базе");
+            log.info("Connection successful.");
             return connection;
         }catch (SQLException e) {
-            log.error("Ошибка подключения");
+            log.error("Connection error.");
             e.printStackTrace();
             return null;
         }
