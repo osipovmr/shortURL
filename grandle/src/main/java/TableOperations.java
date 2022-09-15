@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class TableOperations {
     static Connection connection = ConnectToPostgresDB.getConnection();
-
     private static final Logger log = LogManager.getLogger(TableOperations.class);
 
     public static void add(String originalUrl, String shortUrl) {
@@ -28,6 +27,20 @@ public class TableOperations {
             throw new RuntimeException(e);
         }
     }
+
+    public static String check(String originalUrl) throws SQLException {
+        String query = """
+                select original_url
+                from url
+                where original_url = ?
+                """;
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, originalUrl);
+        ResultSet result = preparedStatement.executeQuery();
+        if (!result.next()) return "ResultSet in empty in Java. Need new data to add.";
+        else return "URL already exists.";
+    }
+
 
     public ResultSet getOriginalUrl(String shortUrl) throws SQLException {
         String query = """
@@ -55,4 +68,7 @@ public class TableOperations {
         return shortUrl;
 
     }
+
+
 }
+
