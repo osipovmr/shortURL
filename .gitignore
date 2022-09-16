@@ -35,3 +35,4 @@ gradle-app.setting
 /grandle/build/classes/java/main/RandomString.class
 /grandle/build/classes/java/main/TableOperations.class
 /.idea/uiDesigner.xml
+/grandle/build/classes/java/main/UrlService.class

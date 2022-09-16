@@ -11,4 +11,7 @@ public class UrlService {
         } else return TableOperations.findShortUrl(originalUrl);
 
     }
+    public static String getOriginalUrl (String shortUrl) throws SQLException {
+        return TableOperations.findOriginalUrl(shortUrl);
+    }
 }

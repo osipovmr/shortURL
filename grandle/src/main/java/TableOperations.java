@@ -28,7 +28,6 @@ public class TableOperations {
         }
     }
 
-
     public static boolean check(String originalUrl) throws SQLException {
         String query = """
                 select original_url
@@ -47,19 +46,6 @@ public class TableOperations {
         }
     }
 
-
-    public ResultSet getOriginalUrl(String shortUrl) throws SQLException {
-        String query = """
-                select original_Url from URL
-                where short_url = ?
-                """;
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, shortUrl);
-        ResultSet result = preparedStatement.executeQuery();
-        return result;
-    }
-
-
     public static String findShortUrl(String originalUrl) throws SQLException {
         String query = """
                 select hash
@@ -71,8 +57,24 @@ public class TableOperations {
         ResultSet result = preparedStatement.executeQuery();
         result.next();
         String shortUrl = String.format("http://localhost:4567/%s", result.getString(1));
+        log.info(shortUrl);
         return shortUrl;
 
+    }
+
+    public static String findOriginalUrl(String shortUrl) throws SQLException {
+        String query = """
+                select original_Url
+                from url
+                where hash = ?
+                """;
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, shortUrl);
+        ResultSet result = preparedStatement.executeQuery();
+        result.next();
+        String originalUrl = result.getString(1);
+        log.info(originalUrl);
+        return originalUrl;
     }
 
 
