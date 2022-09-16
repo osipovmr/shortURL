@@ -28,7 +28,8 @@ public class TableOperations {
         }
     }
 
-    public static String check(String originalUrl) throws SQLException {
+
+    public static boolean check(String originalUrl) throws SQLException {
         String query = """
                 select original_url
                 from url
@@ -37,8 +38,13 @@ public class TableOperations {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, originalUrl);
         ResultSet result = preparedStatement.executeQuery();
-        if (!result.next()) return "ResultSet in empty in Java. Need new data to add.";
-        else return "URL already exists.";
+        if (!result.next()) {
+            log.info("ResultSet in empty in Java. Need new data to add.");
+            return false;
+        } else {
+            log.info("URL already exists.");
+            return true;
+        }
     }
 
 
@@ -54,7 +60,7 @@ public class TableOperations {
     }
 
 
-    public static String getShortUrl(String originalUrl) throws SQLException {
+    public static String findShortUrl(String originalUrl) throws SQLException {
         String query = """
                 select hash
                 from url

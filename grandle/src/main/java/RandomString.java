@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class RandomString {
 
-        public static String getShortUrlRandom(){
+        public static String createShortUrlRandom(){
             String symbol="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             Random random=new Random();
             StringBuffer sb=new StringBuffer();
