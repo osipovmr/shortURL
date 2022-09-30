@@ -5,9 +5,10 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TableOperations {
+public class DAOImpl {
     static Connection connection = ConnectToPostgresDB.getConnection();
-    private static final Logger log = LogManager.getLogger(TableOperations.class);
+    private static final Logger log = LogManager.getLogger(DAOImpl.class);
+    
 
     public static void add(String originalUrl, String shortUrl) {
         String queryAdd = """
@@ -45,7 +46,6 @@ public class TableOperations {
             return true;
         }
     }
-
     public static String findShortUrl(String originalUrl) throws SQLException {
         String query = """
                 select hash
@@ -61,7 +61,6 @@ public class TableOperations {
         return shortUrl;
 
     }
-
     public static String findOriginalUrl(String shortUrl) throws SQLException {
         String query = """
                 select original_Url

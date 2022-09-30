@@ -33,6 +33,6 @@ gradle-app.setting
 /grandle/build/classes/java/main/CreateTable.class
 /grandle/build/resources/main/log4j2.properties
 /grandle/build/classes/java/main/RandomString.class
-/grandle/build/classes/java/main/TableOperations.class
+/grandle/build/classes/java/main/DAOImpl.class
 /.idea/uiDesigner.xml
 /grandle/build/classes/java/main/UrlService.class
