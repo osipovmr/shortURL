@@ -1,12 +1,9 @@
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-
 
 @Entity
-@Table (name = "url")
+//@Table (name = "url")
 public class UrlPojo {
     @Id
     @Column
@@ -23,6 +20,7 @@ public class UrlPojo {
         this.hash = hash;
         this.createdAt = createdAt;
     }
+
 
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}

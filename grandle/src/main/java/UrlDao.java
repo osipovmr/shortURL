@@ -1,5 +1,11 @@
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UrlDao {
-    public UrlPojo findByOriginalUrl(String originalUrl) {
+    public static UrlPojo findByOriginalUrl(String originalUrl) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(UrlPojo.class, originalUrl);
     }
 
@@ -7,36 +13,19 @@ public class UrlDao {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(UrlPojo.class, hash);
     }
 
-/*    public void save(UrlPojo urlPojo) {
+    public static void save(String originalUrl) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        //session.save(urlPojo);
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String hash = RandomString.createShortUrlRandom();
+        UrlPojo newString = new UrlPojo(originalUrl, hash, dateFormat.format(date));
+        /*newString.setOriginal_url(originalUrl);
+        newString.setHash(hash);
+        newString.setCreatedAt(dateFormat.format(date));*/
+        session.save(newString);
         tx1.commit();
         session.close();
-    }*/
-
-/*    public void update(User user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(user);
-        tx1.commit();
-        session.close();
-    }*/
-
-/*    public void delete(User user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(user);
-        tx1.commit();
-        session.close();
-    }*/
-
-/*    public Auto findAutoById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Auto.class, id);
     }
 
-    public List<User> findAll() {
-        List<User> users = (List<User>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User").list();
-        return users;
-    }*/
 }

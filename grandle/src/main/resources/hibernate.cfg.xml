@@ -21,8 +21,6 @@
         <!-- Update database on startup -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!-- Annotated entity classes -->
-        <mapping class="UrlPojo"/>
 
     </session-factory>
 </hibernate-configuration>
