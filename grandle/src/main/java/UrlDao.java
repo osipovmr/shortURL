@@ -1,31 +1,46 @@
+import jakarta.persistence.criteria.Root;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
+import org.hibernate.query.criteria.JpaCriteriaQuery;
+import org.hibernate.query.criteria.JpaParameterExpression;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UrlDao {
-    public static UrlPojo findByOriginalUrl(String originalUrl) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(UrlPojo.class, originalUrl);
-    }
+    private static final Logger log = LogManager.getLogger(UrlDao.class);
 
-    public UrlPojo findByHash(String hash) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(UrlPojo.class, hash);
-    }
-
-    public static void save(String originalUrl) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
+    public static String save(String originalUrl) {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String hash = RandomString.createShortUrlRandom();
-        UrlPojo newString = new UrlPojo(originalUrl, hash, dateFormat.format(date));
-        /*newString.setOriginal_url(originalUrl);
-        newString.setHash(hash);
-        newString.setCreatedAt(dateFormat.format(date));*/
-        session.save(newString);
-        tx1.commit();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        UrlPojo urlPojo = new UrlPojo();
+        urlPojo.setOriginal_url(originalUrl);
+        urlPojo.setHash(hash);
+        urlPojo.setCreatedAt(dateFormat.format(date));
+        log.info("New line is created" + originalUrl + hash + dateFormat.format(date));
+        session.persist(urlPojo);
+        session.getTransaction().commit();
         session.close();
+        return hash;
     }
 
+    public static String getOriginalUrl(String hash) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
+        JpaCriteriaQuery<UrlPojo> criteria = builder.createQuery(UrlPojo.class);
+        Root<UrlPojo> root = criteria.from(UrlPojo.class);
+        JpaParameterExpression<String> nameParam = builder.parameter(String.class);
+        criteria.select(root)
+                .where(builder.equal(root.get("hash"), nameParam));
+        Query<UrlPojo> query = session.createQuery(criteria);
+        query.setParameter(nameParam, hash);
+        String originalUrl = query.getSingleResult().getOriginal_url();
+        return  originalUrl;
+    }
 }
