@@ -10,20 +10,20 @@ import org.hibernate.query.criteria.JpaParameterExpression;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UrlDao {
-    private static final Logger log = LogManager.getLogger(UrlDao.class);
+public class UrlService {
+    private static final Logger log = LogManager.getLogger(UrlService.class);
 
     public static String save(String originalUrl) {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String hash = RandomString.createShortUrlRandom();
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         session.beginTransaction();
-        UrlPojo urlPojo = new UrlPojo();
+        UrlEntity urlPojo = new UrlEntity();
         urlPojo.setOriginal_url(originalUrl);
         urlPojo.setHash(hash);
         urlPojo.setCreatedAt(dateFormat.format(date));
-        log.info("New line is created" + originalUrl + hash + dateFormat.format(date));
+        log.info("New line is created" +"\n"+ originalUrl +"\n"+ hash +"\n"+ dateFormat.format(date));
         session.persist(urlPojo);
         session.getTransaction().commit();
         session.close();
@@ -31,16 +31,18 @@ public class UrlDao {
     }
 
     public static String getOriginalUrl(String hash) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         HibernateCriteriaBuilder builder = session.getCriteriaBuilder();
-        JpaCriteriaQuery<UrlPojo> criteria = builder.createQuery(UrlPojo.class);
-        Root<UrlPojo> root = criteria.from(UrlPojo.class);
+        JpaCriteriaQuery<UrlEntity> criteria = builder.createQuery(UrlEntity.class);
+        Root<UrlEntity> root = criteria.from(UrlEntity.class);
         JpaParameterExpression<String> nameParam = builder.parameter(String.class);
         criteria.select(root)
                 .where(builder.equal(root.get("hash"), nameParam));
-        Query<UrlPojo> query = session.createQuery(criteria);
+        Query<UrlEntity> query = session.createQuery(criteria);
         query.setParameter(nameParam, hash);
         String originalUrl = query.getSingleResult().getOriginal_url();
+        String note = query.getSingleResult().toString();
+        System.out.println(note);
         return  originalUrl;
     }
 }

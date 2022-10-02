@@ -36,3 +36,5 @@ gradle-app.setting
 /grandle/build/classes/java/main/DAOImpl.class
 /.idea/uiDesigner.xml
 /grandle/build/classes/java/main/UrlService.class
+/grandle/build/classes/java/main/HibernateSessionFactory.class
+/grandle/build/classes/java/main/UrlEntity.class

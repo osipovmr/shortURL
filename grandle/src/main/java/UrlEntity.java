@@ -1,19 +1,18 @@
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "url")
-public class UrlPojo {
+public class UrlEntity {
 
     private int id;
     private String original_url;
     private String hash;
     private String createdAt;
 
-    public UrlPojo() {
+    public UrlEntity() {
     }
 
-    UrlPojo (String original_url, String hash, String createdAt){
+    UrlEntity(String original_url, String hash, String createdAt){
         this.original_url = original_url;
         this.hash = hash;
         this.createdAt = createdAt;
@@ -61,10 +60,10 @@ public class UrlPojo {
     @Override
     public String toString() {
         return "url{" +
-                "id=" + id +
-                ", original_url='" + original_url + '\'' +
-                ", hash=" + hash +
-                ", createdAt=" + createdAt +
+                "id= " + id +
+                ", original_url = '" + original_url + '\'' +
+                ", hash = " + hash +
+                ", createdAt = " + createdAt +
                 '}';
     }
 }
